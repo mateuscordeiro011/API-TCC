@@ -64,4 +64,36 @@ public class Endereco {
     public int getNumero() {
         return numero;
     }
+
+    public void setId_endereco(Long endereco){
+        this.id_endereco = endereco;
+    }
+
+    public void setCep(String cep){
+        this.cep = cep;
+    }
+
+    public void setRua(String rua){
+        this.rua = rua;
+    }
+
+    public void setBairro(String bairro){
+        this.bairro = bairro;
+    }
+
+    public void setCidade(String cidade){
+        this.cidade = cidade;
+    }
+
+    public void setEstado(String estado){
+        this.estado = estado;
+    }
+
+    public void setComplemento(String complemento){
+        this.complemento = complemento;
+    }
+
+    public void setNumero(int numero){
+        this.numero = numero;
+    }
 }

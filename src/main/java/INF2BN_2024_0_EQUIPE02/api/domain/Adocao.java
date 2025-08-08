@@ -48,31 +48,30 @@ public class Adocao {
         this.id_adocao = id_adocao;
     }
 
-    public LocalDate getData_adocao(){
+    public LocalDate getData_adocao() {
         return data_adocao;
     }
 
-    public void setData_adocao(LocalDate data_adocao){
+    public void setData_adocao(LocalDate data_adocao) {
         this.data_adocao = data_adocao;
     }
 
-    public boolean getStatus(){
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status){
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
-    public String getObservacoes(){
+    public String getObservacoes() {
         return observacoes;
     }
 
-    public void setObservacoes(String observacoes){
+    public void setObservacoes(String observacoes) {
         this.observacoes = observacoes;
     }
 
-    
     public Cliente getCliente() {
         return cliente;
     }
@@ -81,12 +80,11 @@ public class Adocao {
         this.cliente = cliente;
     }
 
-    
-        public Animal getAnimal() {
-            return animal;
-        }
+    public Animal getAnimal() {
+        return animal;
+    }
 
-        public void setAnimal(Animal animal) {
-            this.animal = animal;
-        }
+    public void setAnimal(Animal animal) {
+        this.animal = animal;
+    }
 }
