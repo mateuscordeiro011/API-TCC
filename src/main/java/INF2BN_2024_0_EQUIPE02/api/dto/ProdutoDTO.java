@@ -8,6 +8,9 @@ public class ProdutoDTO {
     private int estoque;
     private boolean foto;
 
+        public ProdutoDTO() {
+    }
+
     public ProdutoDTO(Long id_produto, String nome, String descricao, float preco, int estoque, boolean foto) {
         this.id_produto = id_produto;
         this.nome = nome;

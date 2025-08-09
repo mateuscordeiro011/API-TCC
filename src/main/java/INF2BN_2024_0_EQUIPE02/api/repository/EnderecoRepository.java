@@ -12,9 +12,9 @@ import java.util.Optional;
 @Repository
 public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
 
-    @Query("SELECT new INF2BN_2024_0_EQUIPE02.api.dto.EnderecoDTO(e.id_endereco, e.cep, e.logradouro, e.bairro, e.cidade, e.estado) FROM Endereco e")
+    @Query("SELECT new INF2BN_2024_0_EQUIPE02.api.dto.EnderecoDTO(e.id_endereco, e.cep, e.rua, e.bairro, e.cidade, e.estado, e.complemento, e.numero) FROM Endereco e")
     List<EnderecoDTO> findAllBasic();
 
-    @Query("SELECT new INF2BN_2024_0_EQUIPE02.api.dto.EnderecoDTO(e.id_endereco, e.cep, e.logradouro, e.bairro, e.cidade, e.estado) FROM Endereco e WHERE e.id_endereco = :id")
+    @Query("SELECT new INF2BN_2024_0_EQUIPE02.api.dto.EnderecoDTO(e.id_endereco, e.cep, e.rua, e.bairro, e.cidade, e.estado, e.complemento, e.numero) FROM Endereco e WHERE e.id_endereco = :id")
     Optional<EnderecoDTO> findBasicById(Long id);
 }
