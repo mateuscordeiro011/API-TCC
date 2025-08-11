@@ -1,6 +1,7 @@
 package INF2BN_2024_0_EQUIPE02.api.dto;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 public class AnimalDTO {
     private Long id_animal;
@@ -11,10 +12,12 @@ public class AnimalDTO {
     private String sexo;
     private float peso;
     private byte[] foto;
-    private Long id_cliente; // Apenas ID, não o cliente completo
+    private Long id_cliente;
+    private Integer idade;
 
     public AnimalDTO(Long id_animal, String nome, String especie, String raca,
-                     LocalDate data_nascimento, String sexo, float peso, byte[] foto, Long id_cliente) {
+                     LocalDate data_nascimento, String sexo, float peso, byte[] foto,
+                     Long id_cliente) {
         this.id_animal = id_animal;
         this.nome = nome;
         this.especie = especie;
@@ -24,7 +27,14 @@ public class AnimalDTO {
         this.peso = peso;
         this.foto = foto;
         this.id_cliente = id_cliente;
+        this.idade = calcularIdade(data_nascimento);
     }
+
+    private static Integer calcularIdade(LocalDate dataNascimento) {
+        if (dataNascimento == null) return null;
+        return Period.between(dataNascimento, LocalDate.now()).getYears();
+    }
+
 
     public Long getId_animal() {
         return id_animal;
@@ -96,5 +106,13 @@ public class AnimalDTO {
 
     public void setId_cliente(Long id_cliente) {
         this.id_cliente = id_cliente;
+    }
+
+    public Integer getIdade() {
+        return idade;
+    }
+
+    public void setIdade(Integer idade) {
+        this.idade = idade;
     }
 }

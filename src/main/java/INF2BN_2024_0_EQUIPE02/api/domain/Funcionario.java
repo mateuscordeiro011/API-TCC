@@ -24,5 +24,5 @@ public class Funcionario {
     @JoinColumn(name = "id_endereco", referencedColumnName = "id_endereco")
     private Endereco Endereco;
     @Column(name = "foto", nullable = true)
-    private boolean foto;
+    private byte[] foto;
 }

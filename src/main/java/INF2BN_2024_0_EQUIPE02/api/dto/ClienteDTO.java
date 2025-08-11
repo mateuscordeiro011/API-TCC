@@ -7,12 +7,13 @@ public class ClienteDTO {
     private String nome;
     private String email;
     private String cpf;
+    private String senha;
     private byte[] foto;
     private Long id_endereco;
     private List<Long> ids_pedidos;
 
-    public ClienteDTO(Long id_cliente, String nome, String email, String cpf,
-                      byte[] foto, Long id_endereco, List<Long> ids_pedidos) {
+    public ClienteDTO(Long id_cliente, String nome, String email, String cpf, String senha,
+            byte[] foto, Long id_endereco, List<Long> ids_pedidos) {
         this.id_cliente = id_cliente;
         this.nome = nome;
         this.email = email;
@@ -52,6 +53,14 @@ public class ClienteDTO {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public byte[] getFoto() {

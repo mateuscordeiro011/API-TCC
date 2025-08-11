@@ -6,12 +6,12 @@ public class ProdutoDTO {
     private String descricao;
     private float preco;
     private int estoque;
-    private boolean foto;
+    private byte[] foto;
 
-        public ProdutoDTO() {
+    public ProdutoDTO() {
     }
 
-    public ProdutoDTO(Long id_produto, String nome, String descricao, float preco, int estoque, boolean foto) {
+    public ProdutoDTO(Long id_produto, String nome, String descricao, float preco, int estoque,  byte[] foto) {
         this.id_produto = id_produto;
         this.nome = nome;
         this.descricao = descricao;
@@ -60,11 +60,11 @@ public class ProdutoDTO {
         this.estoque = estoque;
     }
 
-    public boolean isFoto() {
+    public byte[] isFoto() {
         return foto;
     }
 
-    public void setFoto(boolean foto) {
+    public void setFoto(byte[] foto) {
         this.foto = foto;
     }
 }

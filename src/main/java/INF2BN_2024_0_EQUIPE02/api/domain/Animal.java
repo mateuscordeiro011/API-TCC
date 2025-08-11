@@ -4,6 +4,7 @@
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.Period;
 
 
     @Entity
@@ -41,6 +42,13 @@ import java.time.LocalDate;
 
         @Column(name = "Data_cadastro", nullable = true)
         private LocalDate data;
+
+        public Integer getIdade() {
+        if (this.data_nascimento == null) {
+            return null;
+        }
+        return Period.between(this.data_nascimento, LocalDate.now()).getYears();
+    }
 
         @ManyToOne(fetch = FetchType.LAZY, optional = true)
         @JoinColumn(name = "Id_cliente", nullable = true)

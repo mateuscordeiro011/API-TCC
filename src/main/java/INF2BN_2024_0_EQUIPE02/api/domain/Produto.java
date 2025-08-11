@@ -28,5 +28,5 @@ public class Produto {
         @Column
         private int estoque;
         @Column(name = "foto", nullable = true)
-        private boolean foto;
+        private byte[] foto;
 }

@@ -22,6 +22,9 @@ public class Cliente {
     @Column(name = "Cpf", nullable = false, unique = true, length = 14)
     private String cpf;
 
+    @Column(name = "Senha", nullable = false, unique = true, length = 20)
+    private String senha;
+
     @Column(name = "foto")
     private byte[] foto;
 
@@ -63,6 +66,15 @@ public class Cliente {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public byte[] getFoto() {

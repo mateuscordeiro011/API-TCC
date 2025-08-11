@@ -6,9 +6,9 @@ public class FuncionarioDTO {
     private String cargo;
     private float salario;
     private Long id_endereco;
-    private boolean foto;
+    private byte[] foto;
 
-    public FuncionarioDTO(Long id_Funcionario, String nome, String cargo, float salario, Long id_endereco, boolean foto) {
+    public FuncionarioDTO(Long id_Funcionario, String nome, String cargo, float salario, Long id_endereco, byte[] foto) {
         this.id_Funcionario = id_Funcionario;
         this.nome = nome;
         this.cargo = cargo;
@@ -57,11 +57,11 @@ public class FuncionarioDTO {
         this.id_endereco = id_endereco;
     }
 
-    public boolean isFoto() {
+    public byte[] isFoto() {
         return foto;
     }
 
-    public void setFoto(boolean foto) {
+    public void setFoto(byte[] foto) {
         this.foto = foto;
     }
 }
