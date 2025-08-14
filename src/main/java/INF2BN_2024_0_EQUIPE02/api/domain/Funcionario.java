@@ -16,6 +16,10 @@ public class Funcionario {
     private String nome ;
     @Column(nullable = true, length = 30)
     private String Cargo;
+    @Column(name = "Email", nullable = false, unique = true, length = 200)
+    private String email;
+    @Column(name = "Senha", nullable = false, unique = true, length = 20)
+    private String senha;
     @Column(nullable = true, length = 10000)
     private float salario;
   

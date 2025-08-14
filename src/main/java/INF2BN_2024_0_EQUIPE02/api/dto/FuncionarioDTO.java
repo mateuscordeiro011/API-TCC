@@ -4,14 +4,18 @@ public class FuncionarioDTO {
     private Long id_Funcionario;
     private String nome;
     private String cargo;
+    private String email;
+    private String senha;
     private float salario;
     private Long id_endereco;
     private byte[] foto;
 
-    public FuncionarioDTO(Long id_Funcionario, String nome, String cargo, float salario, Long id_endereco, byte[] foto) {
+    public FuncionarioDTO(Long id_Funcionario, String nome, String cargo, String email, String senha, float salario, Long id_endereco, byte[] foto) {
         this.id_Funcionario = id_Funcionario;
         this.nome = nome;
         this.cargo = cargo;
+        this.email = email;
+        this.senha = senha;
         this.salario = salario;
         this.id_endereco = id_endereco;
         this.foto = foto;
@@ -39,6 +43,22 @@ public class FuncionarioDTO {
 
     public void setCargo(String cargo) {
         this.cargo = cargo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public float getSalario() {
