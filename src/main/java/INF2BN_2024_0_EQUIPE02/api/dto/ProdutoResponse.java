@@ -6,7 +6,7 @@ public class ProdutoResponse {
     private String descricao;
     private Float preco;
     private Integer estoque;
-    private String foto; // ← String Base64 com prefixo
+    private String foto; 
 
     // Construtor padrão
     public ProdutoResponse() {}

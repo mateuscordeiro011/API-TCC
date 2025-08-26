@@ -15,7 +15,7 @@ public class Funcionario {
     @Column(nullable = true, length = 100)
     private String nome ;
     @Column(nullable = true, length = 30)
-    private String Cargo;
+    private String cargo;
     @Column(name = "Email", nullable = false, unique = true, length = 200)
     private String email;
     @Column(name = "Senha", nullable = false, unique = true, length = 20)
@@ -26,7 +26,7 @@ public class Funcionario {
   
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_endereco", referencedColumnName = "id_endereco")
-    private Endereco Endereco;
+    private Endereco endereco;
     @Column(name = "foto", nullable = true)
     private byte[] foto;
 }

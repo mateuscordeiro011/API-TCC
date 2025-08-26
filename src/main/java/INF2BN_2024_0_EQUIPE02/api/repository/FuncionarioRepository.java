@@ -16,12 +16,12 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> 
     Optional<Funcionario> findByEmail(String email);
 
     @Query("SELECT new INF2BN_2024_0_EQUIPE02.api.dto.FuncionarioDTO(" +
-            "f.idFuncionario, f.nome, f.cargo, f.email, f.salario, f.endereco.id_endereco, f.foto) " +
-            "FROM Funcionario f")
+            "f.id_Funcionario," + "f.nome," + "f.cargo," + "f.email," + "f.salario," + "f.endereco.id_endereco,"+ "f.foto) " +
+            "FROM Funcionario f WHERE f.id_Funcionario = :id")
     List<FuncionarioDTO> findAllBasic();
 
     @Query("SELECT new INF2BN_2024_0_EQUIPE02.api.dto.FuncionarioDTO(" +
-            "f.idFuncionario, f.nome, f.cargo, f.email, f.salario, f.endereco.id_endereco, f.foto) " +
-            "FROM Funcionario f WHERE f.idFuncionario = :id")
+            "f.id_Funcionario," + "f.nome," + "f.cargo," + "f.email," + "f.salario," + "f.endereco.id_endereco,"+ "f.foto) " +
+            "FROM Funcionario f WHERE f.id_Funcionario = :id")
     Optional<FuncionarioDTO> findBasicById(@Param("id") Long id);
 }
