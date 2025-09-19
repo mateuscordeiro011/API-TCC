@@ -20,6 +20,7 @@ public class ProdutoController {
 
     @Autowired
     private ProdutoService service;
+    @Autowired
     private ProdutoRepository repository;
 
     @GetMapping

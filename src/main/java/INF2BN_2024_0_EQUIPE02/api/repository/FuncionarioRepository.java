@@ -13,15 +13,19 @@ import java.util.Optional;
 @Repository
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> {
 
-    Optional<Funcionario> findByEmail(String email);
+        Optional<Funcionario> findByEmail(String email);
+        Optional<Funcionario> findByCpf(String cpf);
 
-    @Query("SELECT new INF2BN_2024_0_EQUIPE02.api.dto.FuncionarioDTO(" +
-            "f.id_Funcionario," + "f.nome," + "f.cargo," + "f.email," + "f.salario," + "f.endereco.id_endereco,"+ "f.foto) " +
-            "FROM Funcionario f WHERE f.id_Funcionario = :id")
-    List<FuncionarioDTO> findAllBasic();
+        @Query("SELECT f FROM Funcionario f WHERE f.email = :email OR f.cpf = :cpf")
+        Optional<Funcionario> findByEmailOrCpf(@Param("email") String email, @Param("cpf") String cpf);
 
-    @Query("SELECT new INF2BN_2024_0_EQUIPE02.api.dto.FuncionarioDTO(" +
-            "f.id_Funcionario," + "f.nome," + "f.cargo," + "f.email," + "f.salario," + "f.endereco.id_endereco,"+ "f.foto) " +
-            "FROM Funcionario f WHERE f.id_Funcionario = :id")
-    Optional<FuncionarioDTO> findBasicById(@Param("id") Long id);
+
+        @Query("SELECT new INF2BN_2024_0_EQUIPE02.api.dto.FuncionarioDTO(f.id, f.nome, f.cargo, f.email, CAST(f.salario AS float), f.idEndereco, f.foto) FROM Funcionario f")
+        List<FuncionarioDTO> findAllBasic();
+
+        @Query("SELECT new INF2BN_2024_0_EQUIPE02.api.dto.FuncionarioDTO(f.id, f.nome, f.cargo, f.email, CAST(f.salario AS float), f.idEndereco, f.foto) FROM Funcionario f WHERE f.id = :id")
+        Optional<FuncionarioDTO> findBasicById(@Param("id") Long id);
+
+        @Query("SELECT new INF2BN_2024_0_EQUIPE02.api.dto.FuncionarioDTO(f.id, f.nome, f.cargo, f.email, f.cpf, CAST(f.salario AS float), f.idEndereco, f.foto) FROM Funcionario f WHERE f.id = :id")
+        Optional<FuncionarioDTO> findCompleteById(@Param("id") Long id);
 }

@@ -1,90 +1,84 @@
 package INF2BN_2024_0_EQUIPE02.api.domain;
+// INF2BN_2024_0_EQUIPE02.api.domain.Doacao.java
 
+import jakarta.persistence.*;
 import java.time.LocalDate;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "Adocao", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "Id_animal")
-})
+@Table(name = "Animais")
 public class Adocao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id_adocao")
-    private Long id_adocao;
+    @Column(name = "Id_animal")
+    private Long id_animal;
 
-    @Column(name = "Data_adocao", nullable = true)
-    private LocalDate data_adocao;
+    @Column(name = "Id_cliente")
+    private Long id_cliente_doador;
 
-    @Column(name = "Status", nullable = true)
-    private boolean status;
+    @Column(name = "Nome", nullable = false, length = 200)
+    private String nome;
 
-    @Column(name = "Observacoes", nullable = true, length = 500)
-    private String observacoes;
+    @Column(name = "Especie", nullable = false, length = 200)
+    private String especie;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "Id_animal", nullable = true)
-    private Animal animal;
+    @Column(name = "Raca", length = 200)
+    private String raca;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "Id_cliente", nullable = true)
-    private Cliente cliente;
+    @Column(name = "Data_nascimento")
+    private LocalDate data_nascimento;
 
-    public Long getId_adocao() {
-        return id_adocao;
+    @Column(name = "Sexo", length = 20)
+    private String sexo;
+
+    @Column(name = "Peso", precision = 6, scale = 2)
+    private java.math.BigDecimal peso;
+
+    @Column(name = "foto")
+    private byte[] foto;
+
+    // Status: 'Disponível' (para adoção) ou 'Adotado'
+    @Column(name = "Status", length = 20)
+    private String status;
+
+    @Column(name = "Data_cadastro")
+    private LocalDate data_cadastro;
+
+    public Adocao() {
+        this.data_cadastro = LocalDate.now();
+        this.status = "Disponível"; // Status inicial
     }
 
-    public void setId_adocao(Long id_adocao) {
-        this.id_adocao = id_adocao;
-    }
+    public Long getId_animal() { return id_animal; }
+    public void setId_animal(Long id_animal) { this.id_animal = id_animal; }
 
-    public LocalDate getData_adocao() {
-        return data_adocao;
-    }
+    public Long getId_cliente_doador() { return id_cliente_doador; }
+    public void setId_cliente_doador(Long id_cliente_doador) { this.id_cliente_doador = id_cliente_doador; }
 
-    public void setData_adocao(LocalDate data_adocao) {
-        this.data_adocao = data_adocao;
-    }
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
 
-    public boolean getStatus() {
-        return status;
-    }
+    public String getEspecie() { return especie; }
+    public void setEspecie(String especie) { this.especie = especie; }
 
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
+    public String getRaca() { return raca; }
+    public void setRaca(String raca) { this.raca = raca; }
 
-    public String getObservacoes() {
-        return observacoes;
-    }
+    public LocalDate getData_nascimento() { return data_nascimento; }
+    public void setData_nascimento(LocalDate data_nascimento) { this.data_nascimento = data_nascimento; }
 
-    public void setObservacoes(String observacoes) {
-        this.observacoes = observacoes;
-    }
+    public String getSexo() { return sexo; }
+    public void setSexo(String sexo) { this.sexo = sexo; }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
+    public java.math.BigDecimal getPeso() { return peso; }
+    public void setPeso(java.math.BigDecimal peso) { this.peso = peso; }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
+    public byte[] getFoto() { return foto; }
+    public void setFoto(byte[] foto) { this.foto = foto; }
 
-    public Animal getAnimal() {
-        return animal;
-    }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 
-    public void setAnimal(Animal animal) {
-        this.animal = animal;
-    }
+    public LocalDate getData_cadastro() { return data_cadastro; }
+    public void setData_cadastro(LocalDate data_cadastro) { this.data_cadastro = data_cadastro; }
 }

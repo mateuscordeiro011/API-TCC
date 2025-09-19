@@ -13,29 +13,12 @@ import INF2BN_2024_0_EQUIPE02.api.domain.Adocao;
 
 @Repository
 public interface AdocaoRepository extends JpaRepository<Adocao, Long>{
-    
-    @Query("SELECT new INF2BN_2024_0_EQUIPE02.api.dto.AdocaoDTO(" +
-       "a.id_adocao, " +
-       "a.animal.id_animal, " +
-       "a.cliente.id_cliente, " +
-       "a.observacoes, " +
-       "a.data_adocao, " +
-       "a.status" +
-       ") FROM Adocao a " +
-       "JOIN a.animal " +
-       "JOIN a.cliente")
-List<AdocaoDTO> findAllBasic();
 
-    @Query("SELECT new INF2BN_2024_0_EQUIPE02.api.dto.AdocaoDTO(" +
-       "a.id_adocao, " +
-       "a.animal.id_animal, " +
-       "a.cliente.id_cliente, " +
-       "a.observacoes, " +          
-       "a.data_adocao, " +        
-       "a.status" +               
-       ") FROM Adocao a " +
-       "JOIN a.animal " +
-       "JOIN a.cliente " +
-       "WHERE a.id_adocao = :id")
-Optional<AdocaoDTO> findBasicById(@Param("id") Long id);
+    // Buscar animais disponíveis para adoção
+    @Query("SELECT d FROM Adocao d WHERE d.status = 'Disponível'")
+    List<Adocao> findAnimaisDisponiveis();
+
+    // Buscar doações de um cliente específico (animais que ele cadastrou)
+    @Query("SELECT d FROM Adocao d WHERE d.id_cliente_doador = :idCliente")
+    List<Adocao> findByIdClienteDoador(@Param("idCliente") Long idCliente);
 }

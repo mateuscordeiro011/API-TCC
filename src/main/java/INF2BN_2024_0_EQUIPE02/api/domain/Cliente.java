@@ -11,7 +11,7 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id_cliente")
-    private Long id_cliente;
+    private Long id;
 
     @Column(name = "Nome", nullable = false, length = 200)
     private String nome;
@@ -22,26 +22,22 @@ public class Cliente {
     @Column(name = "Cpf", nullable = false, unique = true, length = 14)
     private String cpf;
 
-    @Column(name = "Senha", nullable = false, unique = true, length = 20)
+    @Column(name = "Senha", nullable = false, length = 255)
     private String senha;
 
     @Column(name = "foto")
     private byte[] foto;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Id_endereco", referencedColumnName = "Id_endereco")
-    private Endereco endereco;
+    @Column(name = "Id_endereco")
+    private Long idEndereco;
 
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
-    private List<Pedido> pedidos;
-
-
-    public Long getId_cliente() {
-        return id_cliente;
+    // Getters e Setters
+    public Long getId() {
+        return id;
     }
 
-    public void setId_cliente(Long id_cliente) {
-        this.id_cliente = id_cliente;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -68,7 +64,6 @@ public class Cliente {
         this.cpf = cpf;
     }
 
-    
     public String getSenha() {
         return senha;
     }
@@ -85,19 +80,11 @@ public class Cliente {
         this.foto = foto;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
+    public Long getIdEndereco() {
+        return idEndereco;
     }
 
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
-    public List<Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(List<Pedido> pedidos) {
-        this.pedidos = pedidos;
+    public void setIdEndereco(Long idEndereco) {
+        this.idEndereco = idEndereco;
     }
 }

@@ -2,7 +2,7 @@ package INF2BN_2024_0_EQUIPE02.api.domain;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.time.Period;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "Animais")
@@ -11,131 +11,57 @@ public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id_animal")
-    private Long id_animal;
+    private Long id;
 
-    @Column(name = "Nome", nullable = true, length = 100)
+    @Column(name = "Nome", nullable = false, length = 100)
     private String nome;
 
-    @Column(name = "Especie", nullable = true, length = 20)
+    @Column(name = "Especie", nullable = false, length = 50)
     private String especie;
 
-    @Column(name = "Raca", nullable = true, length = 40)
+    @Column(name = "Raca", length = 50)
     private String raca;
 
-    @Column(name = "Data_nascimento", nullable = true)
-    private LocalDate data_nascimento;
-
-    @Column(name = "Peso", nullable = true)
-    private float peso;
-
-    @Column(name = "Sexo", nullable = true, length = 1) // M ou F
+    @Column(name = "Sexo", length = 10)
     private String sexo;
 
-    @Column(name = "foto", nullable = true)
+    @Column(name = "Data_Nascimento")
+    private LocalDate dataNascimento;
+
+    @Column(name = "Peso", precision = 5, scale = 2)
+    private BigDecimal peso;
+
+    @Column(name = "Id_cliente")
+    private Long idCliente;
+
+    @Column(name = "foto")
     private byte[] foto;
 
-    @Column(name = "Status", nullable = true)
-    private boolean status;
+    // Getters e Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    @Column(name = "Data_cadastro", nullable = true)
-    private LocalDate data;
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
 
-    public Integer getIdade() {
-        if (this.data_nascimento == null) {
-            return null;
-        }
-        return Period.between(this.data_nascimento, LocalDate.now()).getYears();
-    }
+    public String getEspecie() { return especie; }
+    public void setEspecie(String especie) { this.especie = especie; }
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "Id_cliente", nullable = true)
-    private Cliente cliente;
+    public String getRaca() { return raca; }
+    public void setRaca(String raca) { this.raca = raca; }
 
-    public Long getId_animal() {
-        return id_animal;
-    }
+    public String getSexo() { return sexo; }
+    public void setSexo(String sexo) { this.sexo = sexo; }
 
-    public void setId_animal(Long id_animal) {
-        this.id_animal = id_animal;
-    }
+    public LocalDate getDataNascimento() { return dataNascimento; }
+    public void setDataNascimento(LocalDate dataNascimento) { this.dataNascimento = dataNascimento; }
 
-    public String getNome() {
-        return nome;
-    }
+    public BigDecimal getPeso() { return peso; }
+    public void setPeso(BigDecimal peso) { this.peso = peso; }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+    public Long getIdCliente() { return idCliente; }
+    public void setIdCliente(Long idCliente) { this.idCliente = idCliente; }
 
-    public String getEspecie() {
-        return especie;
-    }
-
-    public void setEspecie(String especie) {
-        this.especie = especie;
-    }
-
-    public String getRaca() {
-        return raca;
-    }
-
-    public void setRaca(String raca) {
-        this.raca = raca;
-    }
-
-    public LocalDate getData_Nascimento() {
-        return data_nascimento;
-    }
-
-    public void setData_Nascimento(LocalDate data_nascimento) {
-        this.data_nascimento = data_nascimento;
-    }
-
-    public float getPeso() {
-        return peso;
-    }
-
-    public void setPeso(float peso) {
-        this.peso = peso;
-    }
-
-    public String getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-
-    public byte[] getFoto() {
-        return foto;
-    }
-
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
-    }
-
-    public boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public LocalDate getData() {
-        return data;
-    }
-
-    public void setData(LocalDate data) {
-        this.data = data;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
+    public byte[] getFoto() { return foto; }
+    public void setFoto(byte[] foto) { this.foto = foto; }
 }

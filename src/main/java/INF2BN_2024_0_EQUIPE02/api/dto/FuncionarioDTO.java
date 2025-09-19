@@ -1,19 +1,44 @@
 package INF2BN_2024_0_EQUIPE02.api.dto;
 
 public class FuncionarioDTO {
-    private Long id_Funcionario;
+
+    private Long id_funcionario;
     private String nome;
     private String cargo;
     private String email;
-    private String senha; // may be null
+    private String cpf;
     private float salario;
     private Long id_endereco;
     private byte[] foto;
 
-    // Constructor used by HQL: does NOT include senha
-    public FuncionarioDTO(Long id_Funcionario, String nome, String cargo, String email,
-                          float salario, Long id_endereco, byte[] foto) {
-        this.id_Funcionario = id_Funcionario;
+    public FuncionarioDTO(
+            Long id_funcionario,
+            String nome,
+            String cargo,
+            String email,
+            String cpf,
+            float salario,
+            Long id_endereco,
+            byte[] foto) {
+        this.id_funcionario = id_funcionario;
+        this.nome = nome;
+        this.cargo = cargo;
+        this.email = email;
+        this.cpf = cpf;
+        this.salario = salario;
+        this.id_endereco = id_endereco;
+        this.foto = foto;
+    }
+
+    public FuncionarioDTO(
+            Long id_funcionario,
+            String nome,
+            String cargo,
+            String email,
+            float salario,
+            Long id_endereco,
+            byte[] foto) {
+        this.id_funcionario = id_funcionario;
         this.nome = nome;
         this.cargo = cargo;
         this.email = email;
@@ -21,17 +46,23 @@ public class FuncionarioDTO {
         this.id_endereco = id_endereco;
         this.foto = foto;
     }
+    
 
-    // Optional: keep this if used elsewhere (e.g., creating users)
-    public FuncionarioDTO(Long id_Funcionario, String nome, String cargo, String email,
-                          String senha, float salario, Long id_endereco, byte[] foto) {
-        this(id_Funcionario, nome, cargo, email, salario, id_endereco, foto);
+     private String senha;
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
         this.senha = senha;
     }
 
-    // Getters and setters
-    public Long getId_Funcionario() { return id_Funcionario; }
-    public void setId_Funcionario(Long id_Funcionario) { this.id_Funcionario = id_Funcionario; }
+
+
+
+    public Long getId_Funcionario() { return id_funcionario; }
+    public void setId_Funcionario(Long id_funcionario) { this.id_funcionario = id_funcionario; }
 
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
@@ -42,8 +73,13 @@ public class FuncionarioDTO {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public String getSenha() { return senha; }
-    public void setSenha(String senha) { this.senha = senha; }
+        public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
 
     public float getSalario() { return salario; }
     public void setSalario(float salario) { this.salario = salario; }
@@ -51,7 +87,7 @@ public class FuncionarioDTO {
     public Long getId_endereco() { return id_endereco; }
     public void setId_endereco(Long id_endereco) { this.id_endereco = id_endereco; }
 
-    public byte[] getFoto() {  // Fixed: was isFoto()
+    public byte[] getFoto() { 
         return foto;
     }
 

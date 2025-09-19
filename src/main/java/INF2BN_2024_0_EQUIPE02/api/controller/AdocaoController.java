@@ -1,51 +1,70 @@
 package INF2BN_2024_0_EQUIPE02.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import INF2BN_2024_0_EQUIPE02.api.domain.Adocao;
 import INF2BN_2024_0_EQUIPE02.api.dto.AdocaoDTO;
 import INF2BN_2024_0_EQUIPE02.api.service.AdocaoService;
 
 @RestController
-@CrossOrigin
-@RequestMapping("/api-salsi/adocao")
+@RequestMapping("/api-salsi/doacoes") // Endpoint para doações
+@CrossOrigin(origins = "http://localhost:5173")
 public class AdocaoController {
-    
+
     @Autowired
     private AdocaoService service;
 
-    @GetMapping
-    public ResponseEntity<List<AdocaoDTO>> listaradocoes(){
-        return ResponseEntity.ok(service.listarAdocao());
+    // Listar animais disponíveis para adoção
+    @GetMapping("/disponiveis")
+    public ResponseEntity<List<Adocao>> listarAnimaisDisponiveis() {
+        List<Adocao> animais = service.listarAnimaisDisponiveis();
+        return ResponseEntity.ok(animais);
     }
 
+    // Listar doações de um cliente (animais que ele cadastrou)
+    @GetMapping("/cliente/{idCliente}")
+    public ResponseEntity<List<Adocao>> listarDoacoesPorCliente(@PathVariable Long idCliente) {
+        List<Adocao> doacoes = service.listarDoacoesPorCliente(idCliente);
+        return ResponseEntity.ok(doacoes);
+    }
+
+    // Buscar uma doação específica
     @GetMapping("/{id}")
-    public ResponseEntity<AdocaoDTO> get(@PathVariable("id") Long id) {
-        return service.getAdocaoById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Adocao> getDoacao(@PathVariable Long id) {
+        Optional<Adocao> doacaoOpt = service.getDoacaoById(id);
+        return doacaoOpt.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    // Cadastrar um novo animal para doação
     @PostMapping
-    public ResponseEntity<Adocao> incluir(@RequestBody Adocao adocao) {
-        Adocao novo = service.incluir(adocao);
-        return ResponseEntity.status(201).body(novo);
+    public ResponseEntity<Adocao> incluir(@RequestBody Adocao doacao) {
+        // Assume que o ID do cliente doador vem no próprio objeto doacao
+        Adocao novaDoacao = service.incluir(doacao);
+        return ResponseEntity.status(201).body(novaDoacao);
     }
 
-    @PutMapping
-    public ResponseEntity<Adocao> atualizar(@PathVariable Long id, @RequestBody Adocao adocao) {
-        Adocao atualizado = service.atualizar(id, adocao);
-        if (atualizado != null) {
-            return ResponseEntity.ok(atualizado);
-        } 
+    // Atualizar uma doação
+    @PutMapping("/{id}")
+    public ResponseEntity<Adocao> atualizar(@PathVariable Long id, @RequestBody Adocao doacao) {
+        Adocao doacaoAtualizada = service.atualizar(id, doacao);
+        if (doacaoAtualizada != null) {
+            return ResponseEntity.ok(doacaoAtualizada);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    // Deletar uma doação
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        boolean deletado = service.deletar(id);
+        if (deletado) {
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.notFound().build();
     }
 }

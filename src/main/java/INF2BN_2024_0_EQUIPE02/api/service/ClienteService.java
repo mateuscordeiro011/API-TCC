@@ -29,7 +29,7 @@ public class ClienteService {
 
     public Cliente atualizar(Long id, Cliente cliente) {
         if (clienteRepository.existsById(id)) {
-            cliente.setId_cliente(id);
+            cliente.setId(id);
             return clienteRepository.save(cliente);
         }
         return null;

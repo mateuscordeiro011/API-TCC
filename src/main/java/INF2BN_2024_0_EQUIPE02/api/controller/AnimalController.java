@@ -21,13 +21,21 @@ public class AnimalController {
     @Autowired
     private AnimalService service;
 
-    @Autowired  // ✅ Adicionado: injeção do repositório
+    @Autowired
     private AnimalRepository repository;
 
     @GetMapping
-    public ResponseEntity<List<AnimalResponse>> listaranimais() {
-        List<AnimalResponse> animais = service.listaranimais();
-        return ResponseEntity.ok(animais);
+    public ResponseEntity<List<AnimalResponse>> listarAnimais() {
+        System.out.println("=== AnimalController: Iniciando listagem de animais ===");
+        try {
+            List<AnimalResponse> animais = service.listarAnimais();
+            System.out.println("=== AnimalController: Animais listados com sucesso, total: " + animais.size() + " ===");
+            return ResponseEntity.ok(animais);
+        } catch (Exception e) {
+            System.err.println(" AnimalController: Erro ao listar animais");
+            e.printStackTrace(); // Imprime a stack trace no console do servidor
+            return ResponseEntity.status(500).build(); // Retorna 500
+        }
     }
 
     @GetMapping("/{id}")
@@ -44,10 +52,9 @@ public class AnimalController {
         animal.setEspecie(request.getEspecie());
         animal.setRaca(request.getRaca());
         animal.setSexo(request.getSexo());
-        animal.setData_Nascimento(request.getData_Nascimento());
-        animal.setPeso(request.getPeso()); 
+        animal.setDataNascimento(request.getData_Nascimento());
+        animal.setPeso(java.math.BigDecimal.valueOf(request.getPeso()));
 
- 
         if (request.getFoto() != null && !request.getFoto().trim().isEmpty()) {
             try {
                 String fotoData = request.getFoto().trim();
@@ -56,12 +63,9 @@ public class AnimalController {
                     fotoData = fotoData.substring(fotoData.indexOf(",") + 1);
                 }
 
-                // Substitui espaços por '+' (caso tenha sido codificado assim)
                 fotoData = fotoData.replace(" ", "+");
-
-                // Decodifica base64 para byte[]
                 byte[] fotoBytes = Base64.getDecoder().decode(fotoData);
-                animal.setFoto(fotoBytes); // ✅ define a foto
+                animal.setFoto(fotoBytes);
 
             } catch (IllegalArgumentException e) {
                 System.err.println("Base64 inválido: " + e.getMessage());
@@ -85,10 +89,9 @@ public class AnimalController {
         animal.setEspecie(request.getEspecie());
         animal.setRaca(request.getRaca());
         animal.setSexo(request.getSexo());
-        animal.setData_Nascimento(request.getData_Nascimento());
-        animal.setPeso(request.getPeso());
+        animal.setDataNascimento(request.getData_Nascimento()); // ✅ Corrigido: nome correto
+        animal.setPeso(java.math.BigDecimal.valueOf(request.getPeso())); // ✅ Corrigido: converter float para BigDecimal
 
-        // Atualiza foto apenas se enviada
         if (request.getFoto() != null && !request.getFoto().trim().isEmpty()) {
             try {
                 String fotoData = request.getFoto().trim();
@@ -98,7 +101,6 @@ public class AnimalController {
                 }
 
                 fotoData = fotoData.replace(" ", "+");
-
                 byte[] fotoBytes = Base64.getDecoder().decode(fotoData);
                 animal.setFoto(fotoBytes);
 

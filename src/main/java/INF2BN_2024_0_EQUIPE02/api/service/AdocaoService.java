@@ -12,27 +12,44 @@ import INF2BN_2024_0_EQUIPE02.api.repository.AdocaoRepository;
 
 @Service
 public class AdocaoService {
-    
+
     @Autowired
-    private AdocaoRepository adocaoRepository;
+    private AdocaoRepository repository;
 
-    public List<AdocaoDTO> listarAdocao() {
-        return adocaoRepository.findAllBasic();
+    public List<Adocao> listarAnimaisDisponiveis() {
+        return repository.findAnimaisDisponiveis();
     }
 
-    public Optional<AdocaoDTO> getAdocaoById(Long id) {
-        return adocaoRepository.findBasicById(id);
+    public List<Adocao> listarDoacoesPorCliente(Long idCliente) {
+        return repository.findByIdClienteDoador(idCliente);
     }
 
-    public Adocao incluir(Adocao adocao) {
-        return adocaoRepository.save(adocao);
+    public Optional<Adocao> getDoacaoById(Long id) {
+        return repository.findById(id);
     }
 
-    public Adocao atualizar(Long id, Adocao adocao) {
-        if (adocaoRepository.existsById(id)) {
-            adocao.setId_adocao(id);
-            return adocaoRepository.save(adocao);
+    public Adocao incluir(Adocao doacao) {
+        // Garante data de cadastro e status inicial
+        doacao.setData_cadastro(java.time.LocalDate.now());
+        if (doacao.getStatus() == null || doacao.getStatus().isEmpty()) {
+            doacao.setStatus("Disponível");
+        }
+        return repository.save(doacao);
+    }
+
+    public Adocao atualizar(Long id, Adocao doacao) {
+        if (repository.existsById(id)) {
+            doacao.setId_animal(id);
+            return repository.save(doacao);
         }
         return null;
+    }
+
+    public boolean deletar(Long id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

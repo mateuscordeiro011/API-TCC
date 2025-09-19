@@ -29,7 +29,7 @@ public class FuncionarioService {
 
     public Funcionario atualizar(Long id, Funcionario funcionario) {
         if (funcionarioRepository.existsById(id)) {
-            funcionario.setId_Funcionario(id);
+            funcionario.setId(id); // ✅ Corrigido: usando setId() em vez de setId_Funcionario()
             return funcionarioRepository.save(funcionario);
         }
         return null;

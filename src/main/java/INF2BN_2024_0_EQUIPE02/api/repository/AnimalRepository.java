@@ -13,13 +13,9 @@ import java.util.Optional;
 @Repository
 public interface AnimalRepository extends JpaRepository<Animal, Long> {
 
-    @Query("SELECT new INF2BN_2024_0_EQUIPE02.api.dto.AnimalDTO(a.id_animal, a.nome, a.especie, a.raca, a.data_nascimento, a.sexo, a.peso, a.foto, a.cliente.id_cliente) FROM Animal a")
+    @Query("SELECT new INF2BN_2024_0_EQUIPE02.api.dto.AnimalDTO(a.id, a.nome, a.especie, a.raca, a.dataNascimento, a.sexo, CAST(a.peso AS float), a.foto, a.idCliente) FROM Animal a")
     List<AnimalDTO> findAllBasic();
 
-    @Query("SELECT new INF2BN_2024_0_EQUIPE02.api.dto.AnimalDTO(" +
-       "a.id_animal, a.nome, a.especie, a.raca, " +
-       "a.data_nascimento, a.sexo, a.peso, a.foto, " +
-       "a.cliente.id_cliente) " +
-       "FROM Animal a WHERE a.id_animal = :id")
-Optional<AnimalDTO> findBasicById(@Param("id") Long id);
+    @Query("SELECT new INF2BN_2024_0_EQUIPE02.api.dto.AnimalDTO(a.id, a.nome, a.especie, a.raca, a.dataNascimento, a.sexo, CAST(a.peso AS float), a.foto, a.idCliente) FROM Animal a WHERE a.id = :id")
+    Optional<AnimalDTO> findBasicById(@Param("id") Long id);
 }
