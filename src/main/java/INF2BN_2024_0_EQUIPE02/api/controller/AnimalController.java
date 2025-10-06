@@ -89,8 +89,8 @@ public class AnimalController {
         animal.setEspecie(request.getEspecie());
         animal.setRaca(request.getRaca());
         animal.setSexo(request.getSexo());
-        animal.setDataNascimento(request.getData_Nascimento()); // ✅ Corrigido: nome correto
-        animal.setPeso(java.math.BigDecimal.valueOf(request.getPeso())); // ✅ Corrigido: converter float para BigDecimal
+        animal.setDataNascimento(request.getData_Nascimento());
+        animal.setPeso(java.math.BigDecimal.valueOf(request.getPeso()));
 
         if (request.getFoto() != null && !request.getFoto().trim().isEmpty()) {
             try {

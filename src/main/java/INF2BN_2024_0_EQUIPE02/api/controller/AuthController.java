@@ -5,13 +5,11 @@ import INF2BN_2024_0_EQUIPE02.api.dto.*;
 import INF2BN_2024_0_EQUIPE02.api.infra.security.JwtUtil;
 import INF2BN_2024_0_EQUIPE02.api.repository.UsuarioRepository;
 import INF2BN_2024_0_EQUIPE02.api.service.AuthService;
-import INF2BN_2024_0_EQUIPE02.api.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
-
 import java.util.Optional;
 
 @RestController
@@ -21,9 +19,6 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
-
-    @Autowired
-    private UsuarioService usuarioService;
 
     @Autowired
     private UsuarioRepository repository;
@@ -39,7 +34,7 @@ public class AuthController {
 
         try {
             AuthResponse response = authService.login(authRequest);
-            System.out.println("Login bem sucedido para: " + authRequest.getEmail());
+            System.out.println("Login bem-sucedido para: " + authRequest.getEmail());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             System.out.println("Login falhou para: " + authRequest.getEmail() + " - Erro: " + e.getMessage());
@@ -52,31 +47,22 @@ public class AuthController {
         try {
             String result = authService.register(registerRequest);
 
-            // ✅ Verificar se é um registro bem-sucedido e fazer login automático
             if (result.startsWith("Cliente registrado com sucesso")) {
-                // Extrair o ID do cliente
                 String[] parts = result.split("\\|");
                 if (parts.length > 1) {
                     Long clienteId = Long.parseLong(parts[1]);
-
-                    // Buscar o usuário recém-criado
                     Optional<Usuario> usuarioOpt = repository.findByEmail(registerRequest.getEmail());
                     if (usuarioOpt.isPresent()) {
-                        Usuario usuario = usuarioOpt.get();
-
-                        // Gerar token
+                        Usuario usuario = usuarioOpt.get(); // ✅ usuario é Usuario (não Optional)
                         String token = jwtUtil.generateToken(
                                 usuario.getEmail(),
-                                usuario.getTipo(),
+                                usuario.getTipo(),      // ✅ SEM .get() extra!
                                 clienteId
                         );
-
-                        // Criar resposta de login
                         AuthResponse response = new AuthResponse();
                         response.setToken(token);
-                        response.setTipo(usuario.getTipo());
+                        response.setTipo(usuario.getTipo()); // ✅
                         response.setId(clienteId);
-
                         return ResponseEntity.ok(response);
                     }
                 }
@@ -89,28 +75,40 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<?> checkSession(HttpServletRequest request) {
+    public ResponseEntity<SessionResponse> checkSession(HttpServletRequest request) {
         try {
             String token = extractTokenFromRequest(request);
+
             if (token == null) {
                 System.out.println("Token não encontrado na requisição");
-                return ResponseEntity.ok(new SessionResponse(false, null, null));
+                return ResponseEntity.ok(new SessionResponse(false, null, null, null));
             }
 
             String email = jwtUtil.extractEmail(token);
             System.out.println("Email extraído do token: " + email);
 
             if (email != null && jwtUtil.validateToken(token, email)) {
-                // Aqui você pode buscar dados reais do usuário
-                System.out.println("Token válido para: " + email);
-                return ResponseEntity.ok(new SessionResponse(true, "CLIENTE", "Nome do Usuário"));
+                Optional<Usuario> usuarioOpt = repository.findByEmail(email);
+                if (usuarioOpt.isPresent()) {
+                    Usuario usuario = usuarioOpt.get(); // ✅ Aqui você tem o objeto Usuario
+
+                    // ✅ USE DIRETAMENTE: usuario.getTipo(), NÃO usuario.get().getTipo()
+                    System.out.println("Token válido para: " + usuario.getEmail());
+                    return ResponseEntity.ok(new SessionResponse(
+                            true,
+                            usuario.getTipo(),
+                            usuario.getEmail(),
+                            usuario.getId()
+                    ));
+                }
             }
 
-            System.out.println("Token inválido");
-            return ResponseEntity.ok(new SessionResponse(false, null, null));
+            System.out.println("Token inválido ou usuário não encontrado");
+            return ResponseEntity.ok(new SessionResponse(false, null, null, null));
+
         } catch (Exception e) {
             System.out.println("Erro ao verificar sessão: " + e.getMessage());
-            return ResponseEntity.ok(new SessionResponse(false, null, null));
+            return ResponseEntity.ok(new SessionResponse(false, null, null, null));
         }
     }
 

@@ -4,11 +4,13 @@ public class SessionResponse {
     private boolean logado;
     private String tipo;
     private String nome;
+    private Long id;
 
-    public SessionResponse(boolean logado, String tipo, String nome) {
+    public SessionResponse(boolean logado, String tipo, String nome, Long id) {
         this.logado = logado;
         this.tipo = tipo;
         this.nome = nome;
+        this.id = id;
     }
 
     // Getters e Setters
@@ -34,5 +36,13 @@ public class SessionResponse {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long nome) {
+        this.id = id;
     }
 }

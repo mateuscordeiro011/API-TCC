@@ -8,10 +8,10 @@ public class EnderecoDTO {
     private String cidade;
     private String estado;
     private String complemento;
-    private int numero;
+    private String numero;
 
     public EnderecoDTO(Long id_endereco, String cep, String rua, String bairro, String cidade, String estado,
-            String complemento, int numero) {
+            String complemento, String numero) {
         this.id_endereco = id_endereco;
         this.cep = cep;
         this.rua = rua;
@@ -78,11 +78,11 @@ public class EnderecoDTO {
         this.complemento = complemento;
     }
 
-    public int getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 }

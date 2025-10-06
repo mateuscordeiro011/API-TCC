@@ -3,10 +3,6 @@ package INF2BN_2024_0_EQUIPE02.api.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDate;
 
-/**
- * DTO para recebimento dos dados de criação/atualização de Animal via API.
- * Mapeia os campos do JSON enviado pelo frontend (ex: { "nascimento": "2020-01-15" }).
- */
 public class AnimalRequest {
 
     @JsonProperty("nome")
@@ -21,7 +17,7 @@ public class AnimalRequest {
     @JsonProperty("sexo")
     private String sexo;
 
-    @JsonProperty("nascimento") // ← JSON envia "nascimento", mapeia para dataNascimento
+    @JsonProperty("nascimento")
     private LocalDate data_nascimento;
 
     @JsonProperty("peso")
@@ -30,7 +26,6 @@ public class AnimalRequest {
     @JsonProperty("foto")
     private String foto;
 
-    // === Getters e Setters ===
 
     public String getNome() {
         return nome;
