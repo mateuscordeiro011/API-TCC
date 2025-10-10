@@ -1,30 +1,22 @@
-package INF2BN_2024_0_EQUIPE02.api.domain;
+package INF2BN_2024_0_EQUIPE02.api.dto;
 
-import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "itens_pedido")
-public class ItemPedido {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CarrinhoItemResponse {
     private Long id;
-    
-
-    @Column(name = "id_produto")
+    private Long idUsuario;
     private Long idProduto;
-
     private Integer quantidade;
     private BigDecimal precoUnitario;
-
-    @ManyToOne
-    @JoinColumn(name = "id_pedido", nullable = false) // FK para Pedido
-    private Pedido pedido;
+    private String nomeProduto;
 
     // Getters e Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
+    public Long getIdUsuario() { return idUsuario; }
+    public void setIdUsuario(Long idUsuario) { this.idUsuario = idUsuario; }
 
     public Long getIdProduto() { return idProduto; }
     public void setIdProduto(Long idProduto) { this.idProduto = idProduto; }
@@ -35,11 +27,6 @@ public class ItemPedido {
     public BigDecimal getPrecoUnitario() { return precoUnitario; }
     public void setPrecoUnitario(BigDecimal precoUnitario) { this.precoUnitario = precoUnitario; }
 
-    // Getter para acessar o ID do pedido (opcional)
-    public Long getIdPedido() {
-        return pedido != null ? pedido.getId_pedido() : null;
-    }
-
-    public Pedido getPedido() { return pedido; }
-    public void setPedido(Pedido pedido) { this.pedido = pedido; }
+    public String getNomeProduto() { return nomeProduto; }
+    public void setNomeProduto(String nomeProduto) { this.nomeProduto = nomeProduto; }
 }

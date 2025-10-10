@@ -1,85 +1,30 @@
 package INF2BN_2024_0_EQUIPE02.api.domain;
 
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import java.math.BigDecimal;
 
-
-@Getter
-@Setter
 @Entity
-@Table(name ="Produto")
-@Data
+@Table(name = "Produto")
+@Data // Gera getters, setters, toString, equals, hashCode
 public class Produto {
-   
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id_produto;
-        @Column(name = "Nome", length = 200)
-        private String nome;
-        @Column(name = "Descricao", length = 500)
-        private String descricao;
-        @Column(name = "Preco")
-        private float preco;
-        @Column(name = "Estoque")
-        private int estoque;
-        @Column(name = "foto", nullable = true)
-        private byte[] foto;
 
-        public Long getId_produto() {
-            return id_produto;
-        }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id_produto;
 
-        public void setId_produto(Long id_produto) {
-            this.id_produto = id_produto;
-        }
+    @Column(name = "Nome", length = 200)
+    private String nome;
 
-        public String getNome() {
-            return nome;
-        }
+    @Column(name = "Descricao", length = 500)
+    private String descricao;
 
-        public void setNome(String nome) {
-            this.nome = nome;
-        }
+    @Column(name = "Preco")
+    private BigDecimal preco; // ✅ Correto para valores monetários
 
-        public String getDescricao() {
-            return descricao;
-        }
+    @Column(name = "Estoque")
+    private Integer estoque; // ✅ Integer em vez de int (permite null, mais seguro)
 
-        public void setDescricao(String descricao) {
-            this.descricao = descricao;
-        }
-
-        public float getPreco() {
-            return preco;
-        }
-
-        public void setPreco(float preco) {
-            this.preco = preco;
-        }
-
-        public int getEstoque() {
-            return estoque;
-        }
-
-        public void setEstoque(int estoque) {
-            this.estoque = estoque;
-        }
-
-        public byte[] getFoto() {
-            return foto;
-        }
-
-        public void setFoto(byte[] foto) {
-            this.foto = foto;
-        }
-}       
-
-
+    @Column(name = "foto", nullable = true)
+    private byte[] foto;
+}

@@ -30,7 +30,7 @@ public class AnimalService {
 
     private AnimalResponse toAnimalResponse(Animal animal) {
         AnimalResponse res = new AnimalResponse();
-        res.setId_animal(animal.getId());
+        res.setId(animal.getId());
         res.setNome(animal.getNome());
         res.setEspecie(animal.getEspecie());
         res.setRaca(animal.getRaca());

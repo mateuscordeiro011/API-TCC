@@ -1,10 +1,12 @@
 package INF2BN_2024_0_EQUIPE02.api.dto;
 
+import java.math.BigDecimal;
+
 public class ProdutoResponse {
     private Long id_produto;
     private String nome;
     private String descricao;
-    private Float preco;
+    private BigDecimal preco;
     private Integer estoque;
     private String foto; 
 
@@ -22,8 +24,8 @@ public class ProdutoResponse {
     public String getDescricao() { return descricao; }
     public void setDescricao(String descricao) { this.descricao = descricao; }
 
-    public Float getPreco() { return preco; }
-    public void setPreco(Float preco) { this.preco = preco; }
+    public BigDecimal getPreco() { return preco; }
+    public void setPreco(BigDecimal  preco) { this.preco = preco; }
 
     public Integer getEstoque() { return estoque; }
     public void setEstoque(Integer estoque) { this.estoque = estoque; }

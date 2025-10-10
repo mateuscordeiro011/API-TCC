@@ -130,10 +130,10 @@ public class EnderecoController {
                         });
 
             } else if ("FUNCIONARIO".equals(usuario.getTipo()) && usuario.getIdFuncionario() != null) {
-                // Busca e atualiza o Funcionario
+                //Busca e atualiza o Funcionario
                 funcionarioRepository.findById(usuario.getIdFuncionario())
                         .ifPresentOrElse(funcionario -> {
-                            funcionario.setIdEndereco(idNovoEndereco);
+                            funcionario.setEndereco(novoEndereco);
                             funcionarioRepository.save(funcionario);
                         }, () -> {
                             // Se o funcionário não for encontrado, faz rollback

@@ -1,23 +1,29 @@
 package INF2BN_2024_0_EQUIPE02.api.dto;
 
-import java.util.Date;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class PedidoDTO {
-    private Long id_pedido;
-    private Date dataPedido;
-    private String status;
-    private BigDecimal valorTotal;
-    private Long id_cliente;
 
-    public PedidoDTO(Long id_pedido, Date dataPedido, String status, BigDecimal valorTotal, Long id_cliente) {
+    private Long id_pedido;
+    private LocalDate data_pedido;
+    private String status;
+    private BigDecimal valor_total;
+    private Long clienteId; // nome do campo pode variar
+
+    // 🔸 Construtor obrigatório para JPQL
+    public PedidoDTO(Long id_pedido, LocalDate data_pedido, String status, BigDecimal valor_total, Long clienteId) {
         this.id_pedido = id_pedido;
-        this.dataPedido = dataPedido;
+        this.data_pedido = data_pedido;
         this.status = status;
-        this.valorTotal = valorTotal;
-        this.id_cliente = id_cliente;
+        this.valor_total = valor_total;
+        this.clienteId = clienteId;
     }
 
+    // 🔸 Construtor padrão (opcional, mas bom ter)
+    public PedidoDTO() {}
+
+    // 🔸 Getters e setters
     public Long getId_pedido() {
         return id_pedido;
     }
@@ -26,12 +32,12 @@ public class PedidoDTO {
         this.id_pedido = id_pedido;
     }
 
-    public Date getDataPedido() {
-        return dataPedido;
+    public LocalDate getData_pedido() {
+        return data_pedido;
     }
 
-    public void setDataPedido(Date dataPedido) {
-        this.dataPedido = dataPedido;
+    public void setData_pedido(LocalDate data_pedido) {
+        this.data_pedido = data_pedido;
     }
 
     public String getStatus() {
@@ -42,19 +48,19 @@ public class PedidoDTO {
         this.status = status;
     }
 
-    public BigDecimal getValorTotal() {
-        return valorTotal;
+    public BigDecimal getValor_total() {
+        return valor_total;
     }
 
-    public void setValorTotal(BigDecimal valorTotal) {
-        this.valorTotal = valorTotal;
+    public void setValor_total(BigDecimal valor_total) {
+        this.valor_total = valor_total;
     }
 
-    public Long getId_cliente() {
-        return id_cliente;
+    public Long getClienteId() {
+        return clienteId;
     }
 
-    public void setId_cliente(Long id_cliente) {
-        this.id_cliente = id_cliente;
+    public void setClienteId(Long clienteId) {
+        this.clienteId = clienteId;
     }
 }

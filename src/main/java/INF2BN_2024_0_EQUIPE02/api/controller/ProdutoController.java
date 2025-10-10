@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +42,7 @@ public class ProdutoController {
         Produto produto = new Produto();
         produto.setNome(request.getNome());
         produto.setDescricao(request.getDescricao());
-        produto.setPreco(request.getPreco());
+     produto.setPreco(BigDecimal.valueOf(request.getPreco()));
         produto.setEstoque(request.getEstoque());
 
         if (request.getFoto() != null && !request.getFoto().trim().isEmpty()) {
@@ -76,7 +77,7 @@ public ResponseEntity<Produto> atualizar(@PathVariable Long id, @RequestBody Pro
     Produto produto = produtoExistente.get();
     produto.setNome(request.getNome());
     produto.setDescricao(request.getDescricao());
-    produto.setPreco(request.getPreco());
+    produto.setPreco(BigDecimal.valueOf(request.getPreco()));
     produto.setEstoque(request.getEstoque());
 
     // Atualiza foto apenas se enviada

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDate;
 
 public class AnimalResponse {
-    private Long id_animal;
+    private Long id;
     private String nome;
     private String especie;
     private String raca;
@@ -18,8 +18,8 @@ public class AnimalResponse {
 
     // Getters e Setters
 
-    public Long getId_animal() { return id_animal; }
-    public void setId_animal(Long id_animal) { this.id_animal = id_animal; }
+    public Long getId() { return id; }
+    public void setId(Long id_animal) { this.id = id_animal; }
 
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }

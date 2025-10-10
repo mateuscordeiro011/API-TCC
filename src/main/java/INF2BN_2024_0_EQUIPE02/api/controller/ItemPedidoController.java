@@ -23,9 +23,12 @@ public class ItemPedidoController {
         return ResponseEntity.ok(itens);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ItemPedidoDTO> get(@PathVariable("id") Long id) {
-        return service.getItemPedidoById(id)
+    // ✅ ALTERADO: dois parâmetros na URL
+    @GetMapping("/{idPedido}/{idProduto}")
+    public ResponseEntity<ItemPedidoDTO> get(
+            @PathVariable("idPedido") Long idPedido,
+            @PathVariable("idProduto") Long idProduto) {
+        return service.getItemPedido(idPedido, idProduto)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -36,12 +39,19 @@ public class ItemPedidoController {
         return ResponseEntity.status(201).body(novo);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ItemPedido> atualizar(@PathVariable Long id, @RequestBody ItemPedido itemPedido) {
-        ItemPedido atualizado = service.atualizar(id, itemPedido);
-        if (atualizado != null) {
-            return ResponseEntity.ok(atualizado);
-        }
-        return ResponseEntity.notFound().build();
+    // ✅ Também atualize o PUT se necessário
+    @PutMapping("/{idPedido}/{idProduto}")
+    public ResponseEntity<ItemPedido> atualizar(
+            @PathVariable("idPedido") Long idPedido,
+            @PathVariable("idProduto") Long idProduto,
+            @RequestBody ItemPedido itemAtualizado) {
+
+        // Ajuste a lógica conforme seu serviço
+        ItemPedido atualizado = service.atualizarQuantidade(
+                idPedido,
+                idProduto,
+                itemAtualizado.getQuantidade()
+        );
+        return ResponseEntity.ok(atualizado);
     }
 }

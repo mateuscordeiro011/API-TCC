@@ -12,7 +12,7 @@ import java.util.Optional;
 @RestController
 @CrossOrigin
 @RequestMapping("/api-salsi/clientes")
-public class ClienteEnderecoController {
+public class    ClienteEnderecoController {
 
     @Autowired
     private EnderecoService enderecoService;
