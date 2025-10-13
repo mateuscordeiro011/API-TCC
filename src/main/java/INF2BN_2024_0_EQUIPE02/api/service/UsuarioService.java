@@ -30,9 +30,6 @@ public class UsuarioService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    /**
-     * Autentica o usuário por email e senha
-     */
     public Optional<UsuarioDTO> autenticar(LoginRequest request) {
         Optional<Usuario> usuarioOpt = usuarioRepository.findByEmail(request.getEmail());
 

@@ -4,8 +4,6 @@ import INF2BN_2024_0_EQUIPE02.api.domain.Cliente;
 import INF2BN_2024_0_EQUIPE02.api.domain.Endereco;
 import INF2BN_2024_0_EQUIPE02.api.dto.AtualizarPerfilDTO;
 import INF2BN_2024_0_EQUIPE02.api.dto.ClienteDTO;
-import INF2BN_2024_0_EQUIPE02.api.dto.EnderecoDTO;
-import INF2BN_2024_0_EQUIPE02.api.dto.PerfilClienteDTO;
 import INF2BN_2024_0_EQUIPE02.api.repository.ClienteRepository;
 import INF2BN_2024_0_EQUIPE02.api.repository.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +38,9 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
-
+    public Optional<Cliente> buscarPorId(Long id) {
+        return clienteRepository.findById(id);
+    }
 
     public Cliente atualizar(Long id, Cliente cliente) {
         if (clienteRepository.existsById(id)) {
@@ -65,7 +65,8 @@ public class ClienteService {
         System.out.println("Foto recebida: " + (dados.getFoto() != null ? "SIM" : "NÃO"));
         if (dados.getFoto() != null) {
             System.out.println("Tamanho da string foto: " + dados.getFoto().length());
-            System.out.println("Primeiros 100 caracteres: " + dados.getFoto().substring(0, Math.min(100, dados.getFoto().length())));
+            System.out.println("Primeiros 100 caracteres: "
+                    + dados.getFoto().substring(0, Math.min(100, dados.getFoto().length())));
         }
         System.out.println("=== FIM DEBUG ===");
         Optional<Cliente> clienteOpt = clienteRepository.findByEmail(email);
@@ -75,20 +76,19 @@ public class ClienteService {
 
         Cliente cliente = clienteOpt.get();
 
-
-
-
         // Atualiza dados do cliente
-        if (dados.getNome() != null) cliente.setNome(dados.getNome());
+        if (dados.getNome() != null)
+            cliente.setNome(dados.getNome());
 
         // Atualiza senha (criptografada)
         if (dados.getSenha() != null && !dados.getSenha().isEmpty()) {
             cliente.setSenha(passwordEncoder.encode(dados.getSenha()));
         }
 
-        //Atualizar Foto (só atualiza se for fornecida)
+        // Atualizar Foto (só atualiza se for fornecida)
         if (dados.getFoto() != null && !dados.getFoto().isEmpty()) {
-            System.out.println("Foto recebida (Base64): " + dados.getFoto().substring(0, Math.min(50, dados.getFoto().length())) + "...");
+            System.out.println("Foto recebida (Base64): "
+                    + dados.getFoto().substring(0, Math.min(50, dados.getFoto().length())) + "...");
             // Converte Base64 para byte[]
             try {
                 // Remove prefixo data:image/...;base64,
@@ -115,13 +115,20 @@ public class ClienteService {
         }
 
         // ✅ Atualiza TODOS os campos do endereço (incluindo numero)
-        if (dados.getCep() != null) endereco.setCep(dados.getCep());
-        if (dados.getRua() != null) endereco.setRua(dados.getRua());
-        if (dados.getNumero() != null) endereco.setNumero(dados.getNumero()); // 👈 LINHA ADICIONADA
-        if (dados.getComplemento() != null) endereco.setComplemento(dados.getComplemento());
-        if (dados.getBairro() != null) endereco.setBairro(dados.getBairro());
-        if (dados.getCidade() != null) endereco.setCidade(dados.getCidade());
-        if (dados.getEstado() != null) endereco.setEstado(dados.getEstado());
+        if (dados.getCep() != null)
+            endereco.setCep(dados.getCep());
+        if (dados.getRua() != null)
+            endereco.setRua(dados.getRua());
+        if (dados.getNumero() != null)
+            endereco.setNumero(dados.getNumero()); // 👈 LINHA ADICIONADA
+        if (dados.getComplemento() != null)
+            endereco.setComplemento(dados.getComplemento());
+        if (dados.getBairro() != null)
+            endereco.setBairro(dados.getBairro());
+        if (dados.getCidade() != null)
+            endereco.setCidade(dados.getCidade());
+        if (dados.getEstado() != null)
+            endereco.setEstado(dados.getEstado());
 
         // Salva o endereço primeiro
         Endereco enderecoSalvo = enderecoRepository.save(endereco);
@@ -136,7 +143,8 @@ public class ClienteService {
 
     public boolean atualizarFotoPorEmail(String email, MultipartFile foto) throws IOException {
         Optional<Cliente> clienteOpt = clienteRepository.findByEmail(email);
-        if (clienteOpt.isEmpty()) return false;
+        if (clienteOpt.isEmpty())
+            return false;
 
         Cliente cliente = clienteOpt.get();
         cliente.setFoto(foto.getBytes());
