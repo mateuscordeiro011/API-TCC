@@ -23,6 +23,10 @@ public class EmailService {
     private String fromName;
 
     public void enviarEmailPedidoConcluido(String emailCliente, String nomeCliente, Long pedidoId, BigDecimal valor) {
+        System.out.println("📧 [EmailService] Iniciando envio de email...");
+        System.out.println("📧 [EmailService] Para: " + emailCliente + ", Nome: " + nomeCliente);
+        System.out.println("📧 [EmailService] Pedido ID: " + pedidoId + ", Valor: " + valor);
+
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -34,11 +38,13 @@ public class EmailService {
             String htmlContent = criarEmailPedidoConcluido(nomeCliente, pedidoId, valor);
             helper.setText(htmlContent, true);
 
+            System.out.println("📧 [EmailService] Enviando email via SMTP...");
             mailSender.send(message);
-            System.out.println("Email enviado para: " + emailCliente);
+            System.out.println("✅ [EmailService] Email enviado com sucesso para: " + emailCliente);
 
         } catch (Exception e) {
-            System.err.println("Erro ao enviar email: " + e.getMessage());
+            System.err.println("❌ [EmailService] Erro ao enviar email: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -93,9 +99,10 @@ public class EmailService {
             helper.setText(htmlContent, true);
 
             mailSender.send(message);
+            System.out.println("✅ Email de boas-vindas enviado para: " + emailCliente);
 
         } catch (Exception e) {
-            System.err.println("Erro ao enviar email: " + e.getMessage());
+            System.err.println("❌ Erro ao enviar email: " + e.getMessage());
         }
     }
 
@@ -136,7 +143,7 @@ public class EmailService {
             <body style="font-family: Arial, sans-serif; color: #333;">
                 <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
                     <div style="text-align: center; background: #d4af37; color: white; padding: 20px; border-radius: 10px 10px 0 0;">
-                        <h1>🐾 PetShop SALSI</h1>
+                        <h1>🐾 PetShop SALSIDOGS</h1>
                         <h2>❤️ Processo de Adoção Iniciado!</h2>
                     </div>
                     
@@ -168,7 +175,7 @@ public class EmailService {
             <body style="font-family: Arial, sans-serif; color: #333;">
                 <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
                     <div style="text-align: center; background: #4CAF50; color: white; padding: 20px; border-radius: 10px 10px 0 0;">
-                        <h1>🐾 PetShop SALSI</h1>
+                        <h1>🐾 PetShop SALSIDOGS</h1>
                         <h2>❤️ Doação Cadastrada!</h2>
                     </div>
                     
@@ -199,7 +206,7 @@ public class EmailService {
             <body style="font-family: Arial, sans-serif; color: #333;">
                 <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
                     <div style="text-align: center; background: linear-gradient(135deg, #00b7c2, #d4af37); color: white; padding: 20px; border-radius: 10px 10px 0 0;">
-                        <h1>🐾 PetShop SALSI</h1>
+                        <h1>🐾 PetShop SALSIDOGS</h1>
                         <h2>🎉 Bem-vindo!</h2>
                     </div>
                     
@@ -222,5 +229,104 @@ public class EmailService {
             </body>
             </html>
             """, nomeCliente);
+    }
+
+    // 📧 NOVOS MÉTODOS DE EMAIL
+    public void enviarEmailProdutoAdicionado(String emailCliente, String nomeCliente, String nomeProduto) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setFrom(fromEmail, fromName);
+            helper.setTo(emailCliente);
+            helper.setSubject("🛒 Novo Produto Disponível - PetShop SALSI");
+
+            String htmlContent = String.format("""
+                <html>
+                <body style="font-family: Arial, sans-serif; color: #333;">
+                    <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+                        <div style="text-align: center; background: #00b7c2; color: white; padding: 20px; border-radius: 10px 10px 0 0;">
+                            <h1>🐾 PetShop SALSIDOGS</h1>
+                            <h2>🛒 Novo Produto!</h2>
+                        </div>
+                        
+                        <div style="padding: 20px;">
+                            <p>Olá <strong>%s</strong>,</p>
+                            <p>Temos um novo produto disponível: <strong>%s</strong>! 🎉</p>
+                            <p>Confira em nosso site e aproveite!</p>
+                        </div>
+                    </div>
+                </body>
+                </html>
+                """, nomeCliente, nomeProduto);
+
+            helper.setText(htmlContent, true);
+            mailSender.send(message);
+
+        } catch (Exception e) {
+            System.err.println("Erro ao enviar email de produto: " + e.getMessage());
+        }
+    }
+
+    public void enviarEmailStatusPedido(String emailCliente, String nomeCliente, Long pedidoId, String novoStatus) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setFrom(fromEmail, fromName);
+            helper.setTo(emailCliente);
+            helper.setSubject("📦 Status do Pedido Atualizado - PetShop SALSI");
+
+            String htmlContent = String.format("""
+                <html>
+                <body style="font-family: Arial, sans-serif; color: #333;">
+                    <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+                        <div style="text-align: center; background: #4CAF50; color: white; padding: 20px; border-radius: 10px 10px 0 0;">
+                            <h1>🐾 PetShop SALSIDOGS</h1>
+                            <h2>📦 Status Atualizado!</h2>
+                        </div>
+                        
+                        <div style="padding: 20px;">
+                            <p>Olá <strong>%s</strong>,</p>
+                            <p>O status do seu pedido #%d foi atualizado para: <strong>%s</strong></p>
+                            <p>Obrigado por escolher o PetShop SALSIDOGS! ❤️</p>
+                        </div>
+                    </div>
+                </body>
+                </html>
+                """, nomeCliente, pedidoId, novoStatus);
+
+            helper.setText(htmlContent, true);
+            mailSender.send(message);
+
+        } catch (Exception e) {
+            System.err.println("Erro ao enviar email de status: " + e.getMessage());
+        }
+    }
+
+    // Método para testar configuração de email
+    public boolean testarConexaoEmail() {
+        try {
+            System.out.println("🔍 [EmailService] Testando configuração de email...");
+            System.out.println("🔍 [EmailService] From Email: " + fromEmail);
+            System.out.println("🔍 [EmailService] From Name: " + fromName);
+
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setFrom(fromEmail, fromName);
+            helper.setTo(fromEmail); // Enviar para si mesmo
+            helper.setSubject("🔧 Teste de Configuração - PetShop SALSI");
+            helper.setText("<h2>Teste de email funcionando!</h2>", true);
+
+            mailSender.send(message);
+            System.out.println("✅ [EmailService] Teste de email enviado com sucesso!");
+            return true;
+
+        } catch (Exception e) {
+            System.err.println("❌ [EmailService] Erro no teste de email: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
     }
 }

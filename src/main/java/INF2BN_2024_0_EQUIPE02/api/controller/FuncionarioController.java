@@ -3,7 +3,6 @@ package INF2BN_2024_0_EQUIPE02.api.controller;
 import INF2BN_2024_0_EQUIPE02.api.domain.Funcionario;
 import INF2BN_2024_0_EQUIPE02.api.dto.AtualizarPerfilFuncionarioDTO;
 import INF2BN_2024_0_EQUIPE02.api.dto.FuncionarioDTO;
-import INF2BN_2024_0_EQUIPE02.api.repository.FuncionarioRepository;
 import INF2BN_2024_0_EQUIPE02.api.service.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +21,6 @@ public class FuncionarioController {
 
     @Autowired
     private FuncionarioService service;
-
-    @Autowired
-    private FuncionarioRepository repository;
 
     @GetMapping
     public ResponseEntity<List<FuncionarioDTO>> listarFuncionarios() {

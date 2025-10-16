@@ -2,7 +2,6 @@ package INF2BN_2024_0_EQUIPE02.api.domain;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 
 @Entity
 @Table(name = "Cliente")

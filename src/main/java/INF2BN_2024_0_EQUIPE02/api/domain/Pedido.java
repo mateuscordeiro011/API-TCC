@@ -1,16 +1,8 @@
 package INF2BN_2024_0_EQUIPE02.api.domain;
 
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
-
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -24,8 +16,9 @@ public class Pedido {
     @JoinColumn(name = "Id_cliente", nullable = false)
     private Cliente cliente;
 
+
     private LocalDate data_pedido = LocalDate.now();
-    private String status = "Carrinho"; // padrão
+    private String status = "Carrinho";
     private BigDecimal valor_total = BigDecimal.ZERO;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -58,6 +51,7 @@ public class Pedido {
     public String getStatus() {
         return status;
     }
+
 
     public void setStatus(String status) {
         this.status = status;

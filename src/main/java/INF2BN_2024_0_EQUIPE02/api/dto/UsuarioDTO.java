@@ -1,7 +1,6 @@
 package INF2BN_2024_0_EQUIPE02.api.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+
 
 public class UsuarioDTO {
     private Long id;

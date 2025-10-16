@@ -2,9 +2,6 @@ package INF2BN_2024_0_EQUIPE02.api.domain;
 
 import jakarta.persistence.*;
 
-import lombok.*;
-
-
 @Entity
 @Table(name = "Usuario")
 public class Usuario {

@@ -3,7 +3,6 @@ package INF2BN_2024_0_EQUIPE02.api.controller;
 import INF2BN_2024_0_EQUIPE02.api.domain.Cliente;
 import INF2BN_2024_0_EQUIPE02.api.dto.AtualizarPerfilDTO;
 import INF2BN_2024_0_EQUIPE02.api.dto.ClienteDTO;
-import INF2BN_2024_0_EQUIPE02.api.dto.PerfilClienteDTO;
 import INF2BN_2024_0_EQUIPE02.api.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

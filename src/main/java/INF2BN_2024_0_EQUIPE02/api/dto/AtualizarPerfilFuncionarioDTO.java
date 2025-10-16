@@ -10,10 +10,14 @@ public class AtualizarPerfilFuncionarioDTO {
     private String bairro;
     private String cidade;
     private String estado;
+    private String foto;
 
     // Getters e Setters
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
+
+    public String getFoto() { return foto; }
+    public void setFoto(String foto) { this.foto = foto; }
 
     public String getSenha() { return senha; }
     public void setSenha(String senha) { this.senha = senha; }

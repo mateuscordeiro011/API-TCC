@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import INF2BN_2024_0_EQUIPE02.api.domain.Adocao;
-import INF2BN_2024_0_EQUIPE02.api.dto.AdocaoDTO;
 import INF2BN_2024_0_EQUIPE02.api.repository.AdocaoRepository;
 
 @Service
@@ -29,12 +28,17 @@ public class AdocaoService {
     }
 
     public Adocao incluir(Adocao doacao) {
-        // Garante data de cadastro e status inicial
-        doacao.setData_cadastro(java.time.LocalDate.now());
-        if (doacao.getStatus() == null || doacao.getStatus().isEmpty()) {
-            doacao.setStatus("Disponível");
+        try {
+            // Garante data de cadastro e status inicial
+            doacao.setData_cadastro(java.time.LocalDate.now());
+            if (doacao.getStatus() == null || doacao.getStatus().isEmpty()) {
+                doacao.setStatus("Disponível");
+            }
+            return repository.save(doacao);
+        } catch (Exception e) {
+            System.err.println("Erro no AdocaoService.incluir: " + e.getMessage());
+            throw e;
         }
-        return repository.save(doacao);
     }
 
     public Adocao atualizar(Long id, Adocao doacao) {
