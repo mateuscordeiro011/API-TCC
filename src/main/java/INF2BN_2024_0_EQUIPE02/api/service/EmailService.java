@@ -304,6 +304,60 @@ public class EmailService {
         }
     }
 
+    public void enviarEmailAgendamentoVisita(String emailCliente, String nomeCliente, String nomeAnimal, String dataVisita) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setFrom(fromEmail, fromName);
+            helper.setTo(emailCliente);
+            helper.setSubject("📅 Agendamento de Visita Confirmado - PetShop SALSI");
+
+            String htmlContent = String.format("""
+                <html>
+                <body style="font-family: Arial, sans-serif; color: #333;">
+                    <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+                        <div style="text-align: center; background: #d4af37; color: white; padding: 20px; border-radius: 10px 10px 0 0;">
+                            <h1>🐾 PetShop SALSI</h1>
+                            <h2>📅 Visita Agendada!</h2>
+                        </div>
+                        
+                        <div style="padding: 20px;">
+                            <p>Olá <strong>%s</strong>,</p>
+                            <p>Seu agendamento de visita foi confirmado com sucesso! 🎉</p>
+                            
+                            <div style="background: #fff8dc; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                                <h3>📋 Detalhes da Visita:</h3>
+                                <p><strong>Animal:</strong> %s</p>
+                                <p><strong>Data e Horário:</strong> %s</p>
+                                <p><strong>Local:</strong> Pet Shop SALSI</p>
+                            </div>
+                            
+                            <div style="background: #f0f8ff; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                                <h3>⚠️ Importante:</h3>
+                                <ul>
+                                    <li>Chegue com 10 minutos de antecedência</li>
+                                    <li>Traga um documento de identidade</li>
+                                    <li>Prepare suas perguntas sobre o %s</li>
+                                </ul>
+                            </div>
+                            
+                            <p>Estamos ansiosos para apresentar o %s para você! ❤️</p>
+                        </div>
+                    </div>
+                </body>
+                </html>
+                """, nomeCliente, nomeAnimal, dataVisita, nomeAnimal, nomeAnimal);
+
+            helper.setText(htmlContent, true);
+            mailSender.send(message);
+            System.out.println("✅ Email de agendamento enviado para: " + emailCliente);
+
+        } catch (Exception e) {
+            System.err.println("❌ Erro ao enviar email de agendamento: " + e.getMessage());
+        }
+    }
+
     // Método para testar configuração de email
     public boolean testarConexaoEmail() {
         try {
